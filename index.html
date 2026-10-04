@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#fbf7f3">
+  <meta name="description" content="La tua biblioteca personale, un capitolo alla volta.">
+  <title>La mia biblioteca</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#libreria" aria-label="La mia biblioteca, home"><span class="brand-mark" aria-hidden="true">♧</span><span class="brand-name">La mia biblioteca</span></a>
+    <nav class="main-nav" aria-label="Navigazione principale">
+      <button class="nav-link active" data-view="library">Libreria</button>
+      <button class="nav-link" data-view="search">Cerca libri</button>
+      <button class="nav-link" data-view="stats">Statistiche</button>
+    </nav>
+    <div class="top-actions"><button class="icon-button" id="quickSearch" aria-label="Cerca libri">⌕</button><span class="top-divider"></span><button class="profile-dot" aria-label="Profilo">R</button></div>
+  </header>
+
+  <main class="layout" id="libreria">
+    <section class="library-column">
+      <p class="eyebrow">IL TUO SPAZIO DI LETTURA</p>
+      <h1>La mia biblioteca</h1>
+      <div class="search-bar" role="search"><span class="search-icon" aria-hidden="true">⌕</span><input id="searchInput" type="search" placeholder="Cerca un titolo o un autore" aria-label="Cerca un titolo o un autore"><button class="filter-icon" id="filterBtn" aria-label="Filtra libri" title="Filtra libri">☷</button></div>
+      <div id="searchResults" class="search-results hidden" aria-live="polite"></div>
+      <div class="section-heading-row"><div><p class="eyebrow" id="shelfEyebrow">LA TUA LETTURA, CON CALMA</p><h2 id="shelfTitle">Sto leggendo</h2></div><button class="primary-button add-book" id="addBookBtn"><span aria-hidden="true">＋</span> Aggiungi libro</button></div>
+      <div class="filter-row" id="filterRow" aria-label="Filtra la libreria">
+        <button class="chip selected" data-filter="all">Tutti <span id="allCount">0</span></button><button class="chip" data-filter="reading">In lettura</button><button class="chip" data-filter="want">Da leggere</button><button class="chip" data-filter="done">Completati</button>
+      </div>
+      <div class="book-grid" id="bookGrid" aria-live="polite"></div>
+      <div class="empty-state hidden" id="emptyState"><div class="empty-flower">✿</div><h3>Una nuova storia ti aspetta</h3><p>Cerca un libro per aggiungerlo alla tua biblioteca.</p><button class="text-button" id="emptySearch">Cerca un libro <span>→</span></button></div>
+      <section class="stats-view hidden" id="statsView"><p class="eyebrow">PICCOLI PASSI, GRANDI STORIE</p><h2>Il tuo percorso</h2><div class="stats-grid"><article><span class="stat-number" id="statBooks">0</span><span>libri in biblioteca</span></article><article><span class="stat-number" id="statPages">0</span><span>pagine lette</span></article><article><span class="stat-number" id="statDone">0</span><span>libri completati</span></article></div><p class="stats-note">Ogni pagina è un piccolo viaggio.</p></section>
+    </section>
+
+    <aside class="pomodoro-card" aria-label="Timer per la lettura">
+      <div class="pomodoro-top"><div><p class="eyebrow">UN MOMENTO PER TE</p><h2>Tempo per leggere</h2><p class="pomodoro-subtitle">Un piccolo tempo, grandi mondi.</p></div><button class="icon-button quiet" id="timerReset" aria-label="Azzera timer" title="Azzera timer">↻</button></div>
+      <div class="timer-wrap"><svg class="timer-ring" viewBox="0 0 240 240" aria-hidden="true"><circle class="ring-track" cx="120" cy="120" r="104"></circle><circle class="ring-progress" id="ringProgress" cx="120" cy="120" r="104"></circle></svg><div class="timer-center"><span class="timer-time" id="timerDisplay">25:00</span><span class="timer-caption" id="timerCaption">il tuo tempo di lettura</span></div></div>
+      <div class="duration-options" role="group" aria-label="Durata del timer"><button class="duration active" data-minutes="25">25 min</button><button class="duration" data-minutes="35">35 min</button><button class="duration" data-minutes="45">45 min</button></div>
+      <button class="primary-button start-button" id="timerStart"><span aria-hidden="true">▶</span><span id="startLabel">Avvia</span></button>
+      <p class="timer-hint" id="timerHint">Scegli la durata e ritagliati una pausa dal resto.</p>
+    </aside>
+  </main>
+
+  <dialog id="bookDialog" class="book-dialog"><div class="dialog-shell"><button class="dialog-close" type="button" aria-label="Chiudi" onclick="document.getElementById('bookDialog').close()">×</button><p class="eyebrow">AGGIUNGI ALLA LIBRERIA</p><h2>Di quale storia parliamo?</h2><label for="dialogSearch">Titolo, autore o ISBN</label><div class="dialog-search-row"><input id="dialogSearch" type="search" placeholder="Es. Orgoglio e pregiudizio"><button type="button" class="primary-button" id="dialogSearchBtn">Cerca</button></div><p class="dialog-help">I dettagli del libro vengono cercati nel catalogo Open Library.</p><div id="dialogResults" class="dialog-results" aria-live="polite"></div><div class="manual-entry"><button type="button" class="text-button" id="manualToggle">Inserisci un libro manualmente <span>＋</span></button><form class="manual-form hidden" id="manualForm"><input name="title" required placeholder="Titolo"><input name="author" placeholder="Autore"><div class="manual-pair"><input name="pages" type="number" min="1" placeholder="Pagine totali"><select name="status"><option value="reading">In lettura</option><option value="want">Da leggere</option><option value="done">Completato</option></select></div><button class="primary-button" type="submit">Aggiungi alla libreria</button></form></div></div></dialog>
+
+  <dialog id="progressDialog" class="book-dialog compact-dialog"><form method="dialog" class="dialog-shell"><button class="dialog-close" value="cancel" aria-label="Chiudi">×</button><p class="eyebrow">AGGIORNA LA LETTURA</p><h2 id="progressTitle">Un altro capitolo</h2><p class="dialog-help" id="progressMeta"></p><label for="pageInput">A che pagina sei arrivata?</label><div class="dialog-search-row"><input id="pageInput" type="number" min="0"><button type="button" class="primary-button" id="saveProgress">Salva</button></div><label for="statusSelect">Stato del libro</label><select id="statusSelect" class="status-select"><option value="reading">In lettura</option><option value="want">Da leggere</option><option value="done">Completato</option></select><button class="text-button remove-book" type="button" id="removeBook">Rimuovi dalla libreria</button></form></dialog>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <footer class="site-footer"><span>Una pagina alla volta.</span><span>I tuoi libri restano salvati su questo dispositivo.</span></footer>
+  <script src="app.js"></script>
+</body>
+</html>
