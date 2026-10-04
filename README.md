@@ -4,7 +4,7 @@ Un tracker di lettura statico, pensato per GitHub Pages. Non richiede compilazio
 
 ## Funzioni
 
-- Ricerca di titolo, autore o ISBN nel catalogo Open Library, con metadati, copertine, anno e numero di pagine quando disponibili.
+- Ricerca simultanea su Open Library e Google Books, anche per autore, con metadati, ISBN, copertine, anno, editore e numero di pagine quando disponibili. I risultati della stessa edizione vengono uniti tramite ISBN.
 - Aggiunta di libri dalla ricerca o inserimento manuale.
 - Libreria filtrabile per stato: in lettura, da leggere e completati.
 - Aggiornamento delle pagine lette e barre di progresso.
@@ -19,4 +19,4 @@ Un tracker di lettura statico, pensato per GitHub Pages. Non richiede compilazio
 3. In **Build and deployment**, seleziona **Deploy from a branch**, scegli `main` e `/(root)`, poi premi **Save**.
 4. Dopo la pubblicazione, apri l'indirizzo Pages mostrato nella stessa sezione.
 
-La ricerca online richiede una connessione a Internet. I libri salvati rimangono nel browser e nel dispositivo in cui li hai aggiunti; per ora non vengono sincronizzati tra dispositivi.
+La ricerca online richiede una connessione a Internet e interroga Open Library e Google Books in tempo reale. I metadati disponibili e le copertine variano in base all’edizione presente nei cataloghi. I libri salvati rimangono nel browser e nel dispositivo in cui li hai aggiunti; per ora non vengono sincronizzati tra dispositivi.
